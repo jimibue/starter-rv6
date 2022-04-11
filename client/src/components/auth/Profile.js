@@ -13,26 +13,53 @@ import "filepond/dist/filepond.min.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import axios from "axios";
 
 // Register the plugins
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 function Profile() {
   const [files, setFiles] = useState([]);
+  const [name, setName] = useState('');
   // what is happening here?
 //   const auth = useContext(AuthContext)
+ 
   const {  user } = useContext(AuthContext)
+
+  //   A file has been added or removed, receives a list of file items
+  const handleUpdate = (files)=>{
+      setFiles(files)      
+  }
+
+  const handleSubmit = async (e)=>{
+      e.preventDefault()
+      let data = new FormData()
+     // axios call
+     try{
+        console.log('trying to update with data:')
+       let res = await axios.put('/api/users/update_image', data)
+       console.log(res)
+     } catch(err){
+         alert('error occured updating')
+     }
+  }
   return (
     <div className="App">
       <h1>Profile Page</h1>
       <p>{JSON.stringify(user)}</p>
-      <FilePond
-        files={files}
-        allowReorder={true}
-        allowMultiple={true}
-        onupdatefiles={setFiles}
-        labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
-      />
+      <form onSubmit={handleSubmit} style={{width:'600px',margin:'auto', padding:'20px', border:'1px solid'}}>
+        <h1>Update User</h1>
+        <p>name</p>
+        <input value={name} onChange={(e)=> setName(e.target.value)} />        
+        <p>image</p>
+        <FilePond
+            files={files}
+            allowMultiple={false}
+            onupdatefiles={handleUpdate}
+            labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
+        />
+        <button type='submit'>update user</button>
+      </form>
     </div>
   );
 }
