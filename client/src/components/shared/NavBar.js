@@ -24,6 +24,7 @@ const Navbar = () => {
       return (
         <>
           <Link to="/home">Home Protected</Link>
+          <Link to="/profile">Profile</Link>
         </>
       );
     }
