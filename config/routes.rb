@@ -5,4 +5,6 @@ Rails.application.routes.draw do
    namespace :api do 
      put 'users/update_image', to: "users#update_image"
    end
+  # need to go at bottom of routes.rb
+  get '*other', to: 'static#index'
 end
