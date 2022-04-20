@@ -33,8 +33,8 @@ const Navbar = () => {
     <div style={{ display: "flex", justifyContent: "space-between" }}>
       <div>
         <Link to="/">Home</Link>
+        <Link to="/braintree">Braintree</Link>
         {renderLeft()}
-
       </div>
       <div>{renderRightNav()}</div>
     </div>

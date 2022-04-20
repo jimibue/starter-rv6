@@ -27,6 +27,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise_token_auth'
 
 gem 'cloudinary'
+gem 'braintree'
 
 group :development, :test do
   gem 'dotenv-rails'
